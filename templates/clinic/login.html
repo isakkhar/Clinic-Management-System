@@ -1,0 +1,106 @@
+{% extends 'clinic/base.html' %}
+{% load static %}
+{% block title %} DRS Drama{% endblock %}
+{% block content %}
+
+    <!-- Begin Wrapper -->
+<div class="main-wrapper auth-bg position-relative overflow-hidden">
+    <!-- Start Content -->
+    <div class="container-fuild position-relative z-1">
+        <div class="w-100 overflow-hidden position-relative flex-wrap d-block vh-100">
+            <div class="row justify-content-center align-items-center vh-100 overflow-auto flex-wrap py-3">
+                <div class="col-lg-4 mx-auto">
+                    <form method="post" action="{% url 'login' %}" class="d-flex justify-content-center align-items-center">
+                        {% csrf_token %}
+                        <div class="d-flex flex-column justify-content-lg-center p-4 p-lg-0 pb-0 flex-fill">
+                            <!-- Logo -->
+                            <div class="mx-auto mb-4 text-center">
+                                <img src="{% static 'assets/img/logo.svg' %}" class="img-fluid" alt="Logo">
+                            </div>
+                            <!-- Flash Messages -->
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                        {{ message }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <div class="card border-1 p-lg-3 shadow-md rounded-3 mb-4">
+                                <div class="card-body">
+                                    <div class="text-center mb-3">
+                                        <h5 class="mb-1 fs-20 fw-bold">Sign In</h5>
+                                        <p class="mb-0">Please enter below details to access the dashboard</p>
+                                    </div>
+                                    <!-- Email Field -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Username</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text border-end-0 bg-white">
+                                                <i class="ti ti-mail fs-14 text-dark"></i>
+                                            </span>
+                                            <input type="text"
+                                                   name="{{ form.username.html_name }}"
+{#                                                   value="{{ form.username.value }}"#}
+                                                   class="form-control border-start-0 ps-0 {% if form.username.errors %}is-invalid{% endif %}"
+                                                   placeholder="Enter Your Username">
+                                        </div>
+                                        {% if form.username.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.username.errors.0 }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <!-- Password Field -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Password</label>
+                                        <div class="pass-group input-group position-relative border rounded {% if form.password.errors %}is-invalid{% endif %}">
+                                            <span class="input-group-text bg-white border-0">
+                                                <i class="ti ti-lock text-dark fs-14"></i>
+                                            </span>
+                                            <input type="password"
+                                                   name="{{ form.password.html_name }}"
+                                                   class="pass-input form-control ps-0 border-0"
+                                                   placeholder="****************">
+                                            <span class="input-group-text bg-white border-0">
+                                                <i class="ti toggle-password ti-eye-off text-dark fs-14"></i>
+                                            </span>
+                                        </div>
+                                        {% if form.password.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.password.errors.0 }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <!-- Remember & Forgot -->
+{#                                    <div class="d-flex align-items-center justify-content-between mb-3">#}
+{#                                        <div class="form-check form-check-md mb-0">#}
+{#                                            <input name="remember_me" class="form-check-input" id="remember_me" type="checkbox" {% if remember_me %}checked{% endif %}>#}
+{#                                            <label for="remember_me" class="form-check-label mt-0 text-dark">Remember Me</label>#}
+{#                                        </div>#}
+{#                                        <div class="text-end">#}
+{#                                            <a href="{% url 'password_reset' %}" class="text-danger">Forgot Password?</a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+                                    <!-- Submit -->
+                                    <div class="mb-2">
+                                        <button type="submit" class="btn bg-primary text-white w-100">Login</button>
+                                    </div>
+                                </div><!-- end card body -->
+                            </div><!-- end card -->
+                            <p class="text-dark text-center">Copyright &copy; {{ now|date:"Y" }} - DRS Drama.</p>
+                        </div>
+                    </form>
+                </div><!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+    </div>
+    <!-- End Content -->
+    <!-- Background Images -->
+    <img src="{% static 'assets/img/auth/auth-bg-top.png' %}" alt="" class="img-fluid element-01">
+    <img src="{% static 'assets/img/auth/auth-bg-bot.png' %}" alt="" class="img-fluid element-02">
+</div>
+    <!-- End Wrapper -->
+
+{% endblock %}
