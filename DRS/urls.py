@@ -22,6 +22,7 @@ urlpatterns = [
     path('doctor/add/',        add_doctor,               name='add_doctor'),
     path('patients/add/',      add_patient,              name='add_patient'),
     path('patients/',          patient_list,             name='patient_list'),
+    # path('patients/delete/', delete_patient, name='delete_patient'),
     path('doctors/',           doctor_list,              name='doctor_list'),
     path('patients/<int:patient_id>/',      patient_detail, name='patient_detail'),
     path('patients/<int:patient_id>/edit/', edit_patient,   name='edit_patient'),
