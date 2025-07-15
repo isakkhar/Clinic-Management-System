@@ -1,0 +1,185 @@
+{% extends 'clinic/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="main-wrapper">
+  {% include 'clinic/header.html' %}
+
+  <div class="page-wrapper">
+    <div class="content">
+      <!-- Page Header -->
+      <div class="mb-4">
+        <h6 class="fw-bold mb-0">
+          <a href="{% url 'patient_list' %}" class="text-dark">
+            <i class="ti ti-chevron-left me-1"></i>Patients
+          </a>
+        </h6>
+      </div>
+
+      <!-- Patient Card -->
+      <div class="card mb-4">
+        <div class="row align-items-end g-0">
+          <div class="col-lg-9">
+            <div class="d-flex align-items-center p-3 position-relative">
+              {% if patient.image %}
+                <a class="avatar avatar-xxxl patient-avatar me-3 flex-shrink-0">
+                  <img src="{{ patient.image.url }}" alt="{{ patient.get_full_name }}" class="rounded">
+                </a>
+              {% else %}
+                <span class="avatar avatar-xxxl bg-secondary text-white me-3 flex-shrink-0 d-flex align-items-center justify-content-center">
+                  <i class="ti ti-user fs-1"></i>
+                </span>
+              {% endif %}
+              <div>
+                <p class="text-primary mb-1">{{ patient.patient_id }}</p>
+                <h5 class="mb-1">
+                  <a href="#" class="fw-bold text-dark">{{ patient.get_full_name }}</a>
+                </h5>
+                <p class="mb-0">{{ patient.address }}</p>
+                <div class="d-flex align-items-center flex-wrap mt-2">
+                  <p class="mb-0 d-inline-flex align-items-center me-3">
+                    <i class="ti ti-phone me-1 text-dark"></i>Phone :
+                    <span class="text-dark ms-1">{{ patient.phone_number }}</span>
+                  </p>
+                  <p class="mb-0 d-inline-flex align-items-center">
+                    <i class="ti ti-calendar-time me-1 text-dark"></i>Last Visited :
+                    <span class="text-dark ms-1">{{ patient.updated_at|date:"d M Y" }}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 text-lg-end p-3">
+            <div class="mb-3">
+              <a href="#" class="btn btn-outline-secondary rounded-circle me-2 p-2">
+                <i class="ti ti-phone"></i>
+              </a>
+              <a href="#" class="btn btn-outline-secondary rounded-circle me-2 p-2">
+                <i class="ti ti-message-circle"></i>
+              </a>
+              <a href="#" class="btn btn-outline-secondary rounded-circle p-2">
+                <i class="ti ti-video"></i>
+              </a>
+            </div>
+{#            <a href="{% url 'add_appointment' patient.id %}" class="btn btn-primary">#}
+{#              <i class="ti ti-calendar-event me-1"></i>Book Appointment#}
+{#            </a>#}
+          </div>
+        </div>
+      </div>
+
+      <!-- About & Vitals Row -->
+      <div class="row g-4">
+        <!-- About Card -->
+        <div class="col-xl-6">
+          <div class="card shadow-sm">
+            <div class="card-header">
+              <h5 class="fw-bold mb-0"><i class="ti ti-user-star me-1"></i>About</h5>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-6 mb-3">
+                  <div class="d-flex align-items-center">
+                    <span class="avatar rounded-circle bg-light text-dark me-2"><i class="ti ti-calendar-event fs-5"></i></span>
+                    <div>
+                      <h6 class="fs-13 fw-bold mb-1">DOB</h6>
+                      <p class="mb-0">{{ patient.date_of_birth|date:"d M Y" }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 mb-3">
+                  <div class="d-flex align-items-center">
+                    <span class="avatar rounded-circle bg-light text-dark me-2"><i class="ti ti-droplet fs-5"></i></span>
+                    <div>
+                      <h6 class="fs-13 fw-bold mb-1">Blood Group</h6>
+                      <p class="mb-0">{{ patient.get_blood_group_display }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 mb-3">
+                  <div class="d-flex align-items-center">
+                    <span class="avatar rounded-circle bg-light text-dark me-2"><i class="ti ti-gender-male fs-5"></i></span>
+                    <div>
+                      <h6 class="fs-13 fw-bold mb-1">Gender</h6>
+                      <p class="mb-0">{{ patient.get_gender_display }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 mb-3">
+                  <div class="d-flex align-items-center">
+                    <span class="avatar rounded-circle bg-light text-dark me-2"><i class="ti ti-mail fs-5"></i></span>
+                    <div>
+                      <h6 class="fs-13 fw-bold mb-1">Email</h6>
+                      <p class="mb-0 text-break">{{ patient.email }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vitals Card -->
+{#        <div class="col-xl-7">#}
+{#          <div class="card shadow-sm">#}
+{#            <div class="card-header">#}
+{#              <h5 class="fw-bold mb-0"><i class="ti ti-book me-1"></i>Vital Signs</h5>#}
+{#            </div>#}
+{#            <div class="card-body">#}
+{#              <div class="row">#}
+{#                {% for sign,label,value,icon,color in patient.vital_signs_list %}#}
+{#                <div class="col-sm-4 mb-3">#}
+{#                  <div class="d-flex align-items-center">#}
+{#                    <span class="avatar rounded-2 bg-light text-dark me-2 border"><i class="ti {{ icon }} fs-5"></i></span>#}
+{#                    <div>#}
+{#                      <h6 class="fs-13 fw-bold mb-1 text-truncate">{{ label }}</h6>#}
+{#                      <p class="mb-0 d-inline-flex align-items-center text-truncate">#}
+{#                        <i class="ti ti-point-filled me-1 text-{{ color }} fs-4"></i>{{ value }}#}
+{#                      </p>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                </div>#}
+{#                {% endfor %}#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+
+      <!-- Tabs: Appointments & Transactions -->
+      <ul class="nav nav-tabs nav-bordered mb-3">
+        <li class="nav-item"><a href="#appointments" data-bs-toggle="tab" class="nav-link active">Appointments</a></li>
+        <li class="nav-item"><a href="#transactions" data-bs-toggle="tab" class="nav-link">Transactions</a></li>
+      </ul>
+      <div class="tab-content">
+        <!-- Appointments Tab -->
+{#        <div class="tab-pane show active" id="appointments">#}
+{#          {% include 'clinic/partials/patient_appointments_table.html' %}#}
+{#        </div>#}
+        <!-- Transactions Tab -->
+{#        <div class="tab-pane" id="transactions">#}
+{#          {% include 'clinic/partials/patient_transactions_table.html' %}#}
+{#        </div>#}
+      </div>
+
+      <!-- Delete Modal -->
+      <div class="modal fade" id="delete_modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+          <div class="modal-content text-center">
+            <div class="modal-body position-relative">
+              <span class="avatar avatar-lg bg-danger text-white mb-3"><i class="ti ti-trash fs-3"></i></span>
+              <h5 class="fw-bold mb-1">Delete Confirmation</h5>
+              <p>Are you sure you want to delete?</p>
+              <div class="d-flex justify-content-center gap-2">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                <a href="#" id="confirmDelete" class="btn btn-danger">Yes, Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
